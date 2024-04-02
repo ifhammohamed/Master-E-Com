@@ -1,7 +1,11 @@
 const mongoose = require("mongoose"); // Erase if already required
 const bcrypt = require("bcrypt");
 
-// Declare the Schema of the Mongo model
+/**
+ * User schema definition.
+ * Defines the schema for the User model including required fields, data types,
+ * and additional constraints like uniqueness.
+ */
 var userSchema = new mongoose.Schema({
   first_name: {
     type: String,
@@ -31,7 +35,10 @@ var userSchema = new mongoose.Schema({
   },
 });
 
-// Encrypt the password
+/**
+ * Encrypts the password field before saving the user document to the database.
+ * Uses bcrypt to generate a salt and hash the password before saving to the document.
+ */
 userSchema.pre("save", async function (next) {
   try {
     const salt = await bcrypt.genSalt(10);
@@ -43,7 +50,11 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-// Decrypt and check the password
+/**
+ * Compares a given password with the hashed password stored in the user document.
+ * Returns true if the passwords match, false otherwise.
+ * Throws an error on failure.
+ */
 userSchema.methods.isPasswordMatched = async function (password) {
   try {
     return await bcrypt.compare(password, this.password);
