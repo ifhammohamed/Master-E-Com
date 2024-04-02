@@ -126,6 +126,8 @@ const updateUser = asyncHandler(async (req, res) => {
     if (!user) {
       throw new Error("User not found");
     }
+    // Remove the password field from the req.body
+    delete req.body.password;
     const updatedUser = await User.findByIdAndUpdate(id, req.body, {
       new: true,
     });
