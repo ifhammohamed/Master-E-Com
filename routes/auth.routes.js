@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-
-router.post("/register");
+const { createUser } = require("../controllers/user.controller");
+router.post("/register", createUser);
 //     , async (req, res) => {
 //   try {
 //     const { first_name, last_name, email, mobile, password } = req.body;
