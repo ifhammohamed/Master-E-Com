@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 
+/**
+ * Connects to the MongoDB database using the DB_URI environment variable.
+ * Handles connected and error events.
+ */
 const dbConnect = () => {
   mongoose.connect(process.env.DB_URI, {
     useNewUrlParser: true,
