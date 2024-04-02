@@ -2,6 +2,15 @@ const User = require("../models/user.model");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../config/jwtToken");
 
+/**
+ * Creates a new user in the database.
+ *
+ * Validates required fields in the request body.
+ * Checks if a user with the given email already exists.
+ * If user does not exist, creates a new user and
+ * returns a success response with the new user data.
+ * If user exists, throws an error.
+ */
 const createUser = asyncHandler(async (req, res) => {
   const { first_name, last_name, email, mobile, password } = req.body;
 
@@ -22,6 +31,11 @@ const createUser = asyncHandler(async (req, res) => {
 });
 
 // Login a user before generate token assign it by config/jwtToken.js
+/**
+ * Logs in a user. Checks if user with provided email exists, and if password matches.
+ * If valid credentials, returns user info and auth token.
+ * Throws error if credentials invalid.
+ */
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   // check if user exists or not
@@ -40,7 +54,11 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-// Get All userSchema
+/**
+ * Gets all users.
+ *
+ * @returns {Promise<User[]>} Promise resolving to array of User documents.
+ */
 const getAllUsers = asyncHandler(async (req, res) => {
   try {
     const users = await User.find();
@@ -50,6 +68,15 @@ const getAllUsers = asyncHandler(async (req, res) => {
   }
 });
 
+/**
+ * Gets a single user by ID.
+ *
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {string} id - The ID of the user to find
+ *
+ * @returns {Promise<User>} Promise resolving to the found User document or rejecting with error
+ */
 const getSingleUser = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
@@ -64,6 +91,13 @@ const getSingleUser = asyncHandler(async (req, res) => {
   }
 });
 
+/**
+ * Deletes a user by ID.
+ *
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Promise}
+ */
 const deleteUser = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
@@ -78,6 +112,13 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 });
 
+/**
+ * Updates a user by ID.
+ *
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Promise} Promise resolving to the updated user object
+ */
 const updateUser = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
