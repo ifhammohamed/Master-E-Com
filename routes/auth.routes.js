@@ -1,24 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const { createUser, loginUser } = require("../controllers/user.controller");
+const {
+  createUser,
+  loginUser,
+  getAllUsers,
+  getSingleUser,
+  deleteUser,
+  updateUser,
+} = require("../controllers/user.controller");
+
 router.post("/register", createUser);
 router.post("/login", loginUser);
-//     , async (req, res) => {
-//   try {
-//     const { first_name, last_name, email, mobile, password } = req.body;
-//     if (!first_name || !last_name || !email || !mobile || !password) {
-//       return res.status(400).json({ error: "All fields are required" });
-//     }
-//     const userExist = await User.findOne({ email });
-//     if (userExist) {
-//       return res.status(400).json({ error: "User already exists" });
-//     }
-//     const user = new User({ first_name, last_name, email, mobile, password });
-//     await user.save();
-//     res.status(201).json({ message: "User registered successfully" });
-//   } catch (error) {
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// }
+router.get("/all-users", getAllUsers);
+router.get("/:id", getSingleUser);
+router.delete("/:id", deleteUser);
+router.patch("/:id", updateUser);
 
 module.exports = router;
