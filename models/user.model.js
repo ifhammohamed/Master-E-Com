@@ -25,6 +25,10 @@ var userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+    default: "user",
+  },
 });
 
 // Encrypt the password
@@ -44,7 +48,7 @@ userSchema.methods.isPasswordMatched = async function (password) {
   try {
     return await bcrypt.compare(password, this.password);
   } catch (error) {
-    throw new Error(error);
+    throw error;
   }
 };
 
